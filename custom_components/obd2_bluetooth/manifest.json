@@ -1,0 +1,15 @@
+{
+  "domain": "obd2_bluetooth",
+  "name": "OBD-II Bluetooth (ELM327)",
+  "codeowners": [
+    "@shelhart"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/shelhart/ha-obd2-bluetooth",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/shelhart/ha-obd2-bluetooth/issues",
+  "requirements": [],
+  "version": "0.2.0"
+}
