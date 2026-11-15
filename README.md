@@ -8,6 +8,18 @@ Home Assistant's Bluetooth system (BlueZ) opens the adapter's serial (SPP/RFCOMM
 
 > Unofficial. Not affiliated with or endorsed by OBD Solutions, LLC, ELM Electronics or any adapter maker. OBDLink is a trademark of OBD Solutions, LLC.
 
+## How this differs
+
+Most other ways to get OBD-II data into Home Assistant need something in between:
+
+| Approach | What it needs |
+|---|---|
+| BLE integrations | A Bluetooth LE adapter, often plus an ESPHome Bluetooth proxy |
+| Phone app bridges (Torque and similar) | A phone left in the vehicle running the app |
+| Hardware bridges (WiCAN, ESP32 firmware) | A dedicated Wi-Fi/MQTT dongle or board |
+
+This integration talks to **Bluetooth Classic** adapters (the OBDLink MX and LX, and most low-cost ELM327 adapters) directly from the Home Assistant host's own Bluetooth. No proxy, phone, MQTT broker or extra hardware.
+
 ## What you get
 
 | Entity | Notes |
