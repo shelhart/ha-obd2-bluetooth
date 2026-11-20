@@ -1,0 +1,31 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set manifest version from tag
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          jq --arg v "$VERSION" '.version = $v' \
+            custom_components/obd2_bluetooth/manifest.json > manifest.tmp
+          mv manifest.tmp custom_components/obd2_bluetooth/manifest.json
+
+      - name: Build zip
+        run: |
+          cd custom_components/obd2_bluetooth
+          zip -r "$GITHUB_WORKSPACE/obd2_bluetooth.zip" . -x '__pycache__/*' '*.pyc'
+
+      - name: Attach zip to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$GITHUB_REF_NAME" obd2_bluetooth.zip --clobber
