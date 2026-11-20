@@ -1,8 +1,8 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags: ['v*']
 
 permissions:
   contents: write
@@ -25,7 +25,12 @@ jobs:
           cd custom_components/obd2_bluetooth
           zip -r "$GITHUB_WORKSPACE/obd2_bluetooth.zip" . -x '__pycache__/*' '*.pyc'
 
-      - name: Attach zip to release
+      - name: Create release with zip
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload "$GITHUB_REF_NAME" obd2_bluetooth.zip --clobber
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" obd2_bluetooth.zip --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" obd2_bluetooth.zip --title "$GITHUB_REF_NAME" --generate-notes
+          fi
