@@ -41,6 +41,13 @@ The integration asks the vehicle which readings it supports and only polls those
 - Home Assistant OS or Supervised on Linux with BlueZ, and a working local Bluetooth adapter. The built-in Raspberry Pi Bluetooth works.
 - A **Bluetooth Classic** (SPP) ELM327-compatible adapter. BLE-only and Wi-Fi adapters are not supported.
 - The host's Bluetooth stack must support RFCOMM. The setup flow checks this and tells you if it doesn't.
+- The adapter must be within Bluetooth range of the Home Assistant host itself. This integration was built for Home Assistant running in the vehicle (an RV or camper van, for example), where the host is always a few feet from the OBD-II port. It can also work with a vehicle parked close to your house, but range depends on walls, the vehicle's body and your Bluetooth hardware.
+
+### ESPHome Bluetooth proxies are not supported
+
+ESPHome Bluetooth proxies only relay Bluetooth LE. The adapters this integration supports (OBDLink MX and similar) use Bluetooth Classic serial (SPP/RFCOMM), which a proxy can't carry. That holds whether or not the adapter is paired. The integration always talks to the adapter through the Home Assistant host's own Bluetooth.
+
+If your vehicle parks out of range, you can put a USB Bluetooth adapter on an extension cable closer to it, or use a Wi-Fi OBD-II bridge with a different integration.
 
 ## Install
 
